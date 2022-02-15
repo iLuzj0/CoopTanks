@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "EnemieBaseActor.h"
@@ -28,13 +28,19 @@ void AEnemieBaseActor::Tick(float DeltaTime)
 }
 FRotator AEnemieBaseActor::FindActorToShootAt(FVector PlayerToShootAt, float DeltaTime, float TowerTurningSpeed)
 {
-	//Finding actor to look at
-	FRotator FoundPlayerLookAtRotation = UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), PlayerToShootAt);
+	//Znalezienie na co patrzy aktor
+	FRotator FoundPlayerLookAtRotation = UKismetMathLibrary::FindLookAtRotation(
+		this->GetActorLocation(), PlayerToShootAt
+	);
 
-	//Converting look at rotation to use in reinterpto 
-	FRotator ConvertedFoundPlayerLookAtRotation = FRotator(0.0, FoundPlayerLookAtRotation.Yaw, 0.0);
+	//Konwertowanie FoundPlayerLookAtRotation aby był kompatybilny z funkcja RInterpTo
+	FRotator ConvertedFoundPlayerLookAtRotation = FRotator(
+		0.0, FoundPlayerLookAtRotation.Yaw, 0.0
+	);
 
-	//Returning location to look at reinterprated by elapsed time
-	return FMath::RInterpTo(this->GetActorRotation(), ConvertedFoundPlayerLookAtRotation, DeltaTime, TowerTurningSpeed);
+	//Zwracanie rotacji na jaka ma patrzec aktor
+	return FMath::RInterpTo(
+		this->GetActorRotation(), ConvertedFoundPlayerLookAtRotation, DeltaTime, TowerTurningSpeed
+	);
 }
 
